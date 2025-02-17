@@ -3,9 +3,29 @@ const app = express();
 app.listen(1234)
 
 let db = new Map()
-db.set(1, "product1")  // 각각 key 값과 value 값을 저장
-db.set(2, "product2")
-db.set(3, "product3")
+
+let product1 = {
+    productName : "product1",
+    price : 20000
+}
+
+let product2 = {
+    productName : "product2",
+    price : 25000
+}
+
+let product3 = {
+    productName : "product3",
+    price : 30000
+}
+
+// db.set(1, "product1")  // 각각 key 값과 value 값을 저장
+// db.set(2, "product2")
+// db.set(3, "product3")
+
+db.set(1, product1)
+db.set(2, product2)
+db.set(3, product3)
 
 console.log(db)
 console.log(db.get(1))
@@ -13,20 +33,18 @@ console.log(db.get(2))
 console.log(db.get(3))
 
 app.get('/:n', function(req, res) {
-    // let parse = parseInt(req.params.n); -> 비구조화로 보다 간단하게 표현
-    
     const {n} = req.params
-    let num = parseInt(num) 
+    let num = parseInt(n) 
 
     if(db.get(num) == undefined){
         res.json({
             message: "없는 상품입니다."
         })
     } else {
-        res.json({
-        id: num,
-        product: db.get(num)
-    })
+        let product = db.get(num)
+        product["id"] = num     // product.id = num
+
+        res.json(product)
     }
     
 })
