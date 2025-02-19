@@ -3,6 +3,8 @@ const express = require("express")
 const app = express()
 app.listen(1234)
 
+var id = 4;
+
 //youtuber data setting
 let youtuber1 = {
     channelTitle: "십오야",
@@ -27,8 +29,14 @@ db.set(1, youtuber1)
 db.set(2, youtuber2)
 db.set(3, youtuber3)
 
+// youtuber list 조회
+app.get('/youtubers', function(req, res) {
+    res.json({
+        message: "test"
+    })
+})
 
-// rest api
+// rest api (youtuber id별 조회)
 app.get('/youtuber/:id', function(req, res) {
     let {id} = req.params
     id = parseInt(id)
@@ -41,4 +49,14 @@ app.get('/youtuber/:id', function(req, res) {
     } else{
         res.json(youtuber)
     }
+})
+
+//rest api (youtuber add)
+app.use(express.json())     // http 외 모듈인 '미들웨어' - json 설정
+app.post('/youtuber/register', function(req, res) {
+    console.log(req.body)
+
+    // id 자동 증가
+    db.set(id, req.body)
+    res.send(`${db.get(id++).channelTitle}님 유튜브 생활을 응원합니다!`)
 })
