@@ -1,50 +1,17 @@
-const express = require('express');
-const app = express();
-app.listen(1234)
+// map 함수(메서드) vs foreach 차이
+const arr = [1, 2, 3, 4, 5]
 
-let db = new Map()
-
-let product1 = {
-    productName : "product1",
-    price : 20000
-}
-
-let product2 = {
-    productName : "product2",
-    price : 25000
-}
-
-let product3 = {
-    productName : "product3",
-    price : 30000
-}
-
-// db.set(1, "product1")  // 각각 key 값과 value 값을 저장
-// db.set(2, "product2")
-// db.set(3, "product3")
-
-db.set(1, product1)
-db.set(2, product2)
-db.set(3, product3)
-
-console.log(db)
-console.log(db.get(1))
-console.log(db.get(2))
-console.log(db.get(3))
-
-app.get('/:n', function(req, res) {
-    const {n} = req.params
-    let num = parseInt(n) 
-
-    if(db.get(num) == undefined){
-        res.json({
-            message: "없는 상품입니다."
-        })
-    } else {
-        let product = db.get(num)
-        product["id"] = num     // product.id = num
-
-        res.json(product)
-    }
-    
+// 배열에서 하나씩 데이터를 꺼내면 호출되는 콜백함수 (매개변수로 요소를 전달)
+const Foreach = arr.forEach((a, b, c) => {
+    //각각 데이터, idx, 객체 전체를 가져옴. -> return으로 값을 받을 순 없음
+    // console.log(`a: ${a}, b: ${b}, c: ${c}`)  
+    return a 
 })
+
+const MapArray = arr.map((a, b, c) => {
+    //각각 데이터, idx, 객체 전체를 가져옴. -> return으로 값을 받을 수 있음
+    // console.log(`a: ${a}, b: ${b}, c: ${c}`)    
+    return a
+})
+
+console.log(`foreach: ${Foreach}, map: ${MapArray}`)
