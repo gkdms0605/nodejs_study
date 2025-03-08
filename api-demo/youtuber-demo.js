@@ -70,7 +70,7 @@ app.post('/youtubers', ((req, res) => {
     if(!req.body.videos) req.body.videos = "0개" 
 
     if(req.body.channelTitle) {
-        // id 자동 증가
+    // id 자동 증가
         db.set(id, req.body)
         res.status(201).send(`${db.get(id++).channelTitle}님 유튜브 생활을 응원합니다!`)
     }

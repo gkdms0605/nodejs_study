@@ -1,4 +1,8 @@
 const express = require('express');
+const dotenv = require('dotenv')
+
+dotenv.config({ path: __dirname + '/../.env'})
+
 const app = express();
 
 // GET "/"
@@ -24,4 +28,4 @@ app.get('/products/1', function(req, res) {
 })
 
 
-app.listen(1234)
+app.listen(process.env.PORT)
