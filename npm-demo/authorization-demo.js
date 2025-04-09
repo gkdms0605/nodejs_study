@@ -6,7 +6,12 @@ dotenv.config({path: __dirname + '/../.env'});
 app.listen(process.env.PORT);
 
 app.get('/jwt', (req, res) => {
-    let token = jwt.sign({user_name: '테스터'}, process.env.SECRET_KEY)
+    const token = jwt.sign({
+        username: "haeun lee"
+    }, process.env.SECRET_KEY,  {
+        expiresIn: '1m',
+        issuer: 'admin'
+    })
 
     res.cookie("jwt", token, {
         httpOnly: true
@@ -17,5 +22,8 @@ app.get('/jwt', (req, res) => {
 app.get('/jwt/decoded', (req, res) => {
     let receivedtoken = req.headers["authorization"];
     let decoded = jwt.verify(receivedtoken, process.env.SECRET_KEY);
+
+    // 토큰 만기 - 500에러가 아닌 예외처리
+    // 유효 기간이 지났다? -> 로그인(인증) 세션이 만료되었습니다. 
     res.json(decoded);
 })
